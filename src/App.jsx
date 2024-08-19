@@ -120,7 +120,7 @@ function CustomTipCard({ onSelection, customTip, onCustomTip }) {
       placeholder="CUSTOM"
       value={Number(customTip)}
       onChange={(e) => handleCustomTip(Number(e.target.value))}
-      className="w-52 py-3 bg-neutral-very-light-grayish-cyan text-center rounded-lg text-white font-bold text-xl text-black outline-neutral-grayish-cyan"
+      className="w-52 py-3 bg-neutral-very-light-grayish-cyan text-center rounded-lg text-black font-bold text-xl outline-neutral-grayish-cyan"
     />
   );
 }
