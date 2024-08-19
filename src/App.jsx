@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+// TODO Add custom selection styling, custom tip selected value and responsive design
+
 export default function App() {
   return (
     <div className="bg-neutral-light-grayish-cyan h-screen flex flex-col items-center font-spaceMono">
@@ -17,17 +19,23 @@ function MainContainer() {
   const [bill, setBill] = useState("");
   const [people, setPeople] = useState("");
   const [selected, setSelected] = useState(0);
+  const [customTip, setCustomTip] = useState(0);
 
-  let tipAmount = (bill * selected) / 100;
+  let tipAmount = (bill * selected || bill * customTip) / 100;
 
   function handleSelection(value) {
     setSelected(value);
+  }
+
+  function handleCustomTip(value) {
+    setCustomTip(value);
   }
 
   function handleReset() {
     setBill("");
     setPeople("");
     setSelected(0);
+    setCustomTip(0);
     tipAmount = 0;
   }
 
@@ -48,7 +56,11 @@ function MainContainer() {
           <p className="text-neutral-dark-grayish-cyan font-bold">
             Select Tip %
           </p>
-          <Selection onSelection={handleSelection} />
+          <Selection
+            customTip={customTip}
+            onSelection={handleSelection}
+            onCustomTip={handleCustomTip}
+          />
         </div>
 
         <div className="p-4">
@@ -79,7 +91,7 @@ function MainContainer() {
   );
 }
 
-function Selection({ onSelection }) {
+function Selection({ onSelection, customTip, onCustomTip }) {
   return (
     <div className="flex justify-between flex-wrap gap-4 my-3">
       <PercentCard num={5} onSelection={onSelection} />
@@ -87,7 +99,29 @@ function Selection({ onSelection }) {
       <PercentCard num={15} onSelection={onSelection} />
       <PercentCard num={25} onSelection={onSelection} />
       <PercentCard num={50} onSelection={onSelection} />
+      <CustomTipCard
+        customTip={customTip}
+        onCustomTip={onCustomTip}
+        onSelection={onSelection}
+      />
     </div>
+  );
+}
+
+function CustomTipCard({ onSelection, customTip, onCustomTip }) {
+  function handleCustomTip(value) {
+    onSelection(0);
+    onCustomTip(value);
+  }
+
+  return (
+    <input
+      type="text"
+      placeholder="CUSTOM"
+      value={Number(customTip)}
+      onChange={(e) => handleCustomTip(Number(e.target.value))}
+      className="w-52 py-3 bg-neutral-very-light-grayish-cyan text-center rounded-lg text-white font-bold text-xl text-black outline-neutral-grayish-cyan"
+    />
   );
 }
 
@@ -97,7 +131,7 @@ function PercentCard({ num, onSelection }) {
       onClick={() => {
         onSelection(num);
       }}
-      className="w-52 py-3 bg-neutral-very-dark-cyan rounded-lg text-white font-bold text-xl"
+      className="w-52 py-3 bg-neutral-very-dark-cyan rounded-lg text-white font-bold text-xl hover:bg-neutral-grayish-cyan hover:text-black"
     >
       {num}%
     </button>
