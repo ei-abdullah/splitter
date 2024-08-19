@@ -175,7 +175,7 @@ function TotalAmount({ bill, people, tipAmount, onReset }) {
         <div className="flex justify-center">
           <button
             onClick={onReset}
-            className="w-72 py-3 rounded-lg bg-neutral-grayish-cyan"
+            className="w-72 py-3 rounded-lg bg-neutral-grayish-cyan hover:bg-neutral-very-light-grayish-cyan"
           >
             <p className="text-center font-semibold text-neutral-very-dark-cyan text-2xl">
               RESET
